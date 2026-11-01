@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PlusCircle, Edit3, Trash2, Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import api from '../../services/api';
 import StatusBadge from '../../components/common/StatusBadge';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ArtisanProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -111,7 +112,7 @@ const ArtisanProductsPage = () => {
                       <td style={{ padding: '0.85rem 0.5rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                           <img
-                            src={prod.images?.[0] || 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&q=80'}
+                            src={getImageUrl(prod.images?.[0])}
                             alt={prod.name}
                             style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }}
                           />

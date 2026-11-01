@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Package, Truck, Check, X, Clock, AlertTriangle, ArrowRight } from 'lucide-react';
 import api from '../../services/api';
 import StatusBadge from '../../components/common/StatusBadge';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ArtisanOrdersPage = () => {
   const [fulfilments, setFulfilments] = useState([]);
@@ -130,7 +131,7 @@ const ArtisanOrdersPage = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     {ful.items?.map((it, idx) => (
                       <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <img src={it.image} alt={it.name} style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
+                        <img src={getImageUrl(it.image)} alt={it.name} style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
                         <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: 600 }}>{it.name}</div>
                           <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>

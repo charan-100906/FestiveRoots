@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// In production, VITE_API_URL points to the deployed backend (e.g. https://festiveroots-backend.onrender.com)
+// In local development, Vite proxy forwards '/api' to http://localhost:5000
+const rawBaseUrl = import.meta.env.VITE_API_URL || '';
+const baseURL = rawBaseUrl ? `${rawBaseUrl.replace(/\/+$/, '')}/api` : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json'
   }

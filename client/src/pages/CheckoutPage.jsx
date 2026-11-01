@@ -4,6 +4,7 @@ import { ShieldCheck, Truck, CreditCard, Banknote, ArrowRight, ArrowLeft } from 
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CheckoutPage = () => {
   const { cartItems, subtotal, deliveryCharge, totalAmount, clearCart } = useCart();
@@ -223,7 +224,7 @@ const CheckoutPage = () => {
               <div className="checkout-items-list">
                 {cartItems.map((it) => (
                   <div key={it.productId} className="checkout-item-preview">
-                    <img src={it.image} alt={it.name} className="checkout-thumb" />
+                    <img src={getImageUrl(it.image)} alt={it.name} className="checkout-thumb" />
                     <div className="checkout-thumb-info">
                       <div className="checkout-prod-name">{it.name}</div>
                       <div className="checkout-prod-meta">Qty: {it.quantity} × ₹{it.price.toLocaleString('en-IN')}</div>

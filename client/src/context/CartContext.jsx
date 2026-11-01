@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CartContext = createContext();
 
@@ -37,7 +38,7 @@ export const CartProvider = ({ children }) => {
             productId: product._id,
             name: product.name,
             price: product.price,
-            image: product.images?.[0] || '',
+            image: getImageUrl(product.images?.[0]),
             craftType: product.craftType || '',
             artisanName: product.artisan?.businessName || 'Artisan',
             stock: product.stock,

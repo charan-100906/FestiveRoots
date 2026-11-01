@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Check, X, ShieldCheck, MapPin, Eye, AlertTriangle } from 'lucide-react';
 import api from '../../services/api';
 import StatusBadge from '../../components/common/StatusBadge';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const AdminProductsPage = () => {
   const [pendingProducts, setPendingProducts] = useState([]);
@@ -114,7 +115,7 @@ const AdminProductsPage = () => {
               <div key={prod._id} className="card" style={{ padding: '1.75rem', background: '#FFFFFF' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: '1.5rem', alignItems: 'start' }}>
                   <img
-                    src={prod.images?.[0] || 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&q=80'}
+                    src={getImageUrl(prod.images?.[0])}
                     alt={prod.name}
                     style={{ width: '120px', height: '120px', borderRadius: 'var(--radius-md)', objectFit: 'cover' }}
                   />

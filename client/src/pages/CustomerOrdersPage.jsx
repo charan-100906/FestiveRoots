@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Package, Truck, Clock, AlertTriangle, ArrowRight, XCircle } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/common/StatusBadge';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CustomerOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -112,7 +113,7 @@ const CustomerOrdersPage = () => {
                     <div className="order-items-column">
                       {order.orderItems?.map((item, idx) => (
                         <div key={idx} className="order-item-row">
-                          <img src={item.image} alt={item.name} className="order-item-img" />
+                          <img src={getImageUrl(item.image)} alt={item.name} className="order-item-img" />
                           <div className="order-item-desc">
                             <h4 className="order-item-name">
                               <Link to={`/products/${item.product}`}>{item.name}</Link>

@@ -2,14 +2,23 @@
 node_modules/
 package-lock.json
 
-# Environment files
+# Environment variables & secrets (CRITICAL: Never commit secrets)
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
 
-# Build output
+# Build outputs
 dist/
+dist-ssr/
 build/
+*.tsbuildinfo
+
+# Vercel & hosting cache
+.vercel
+.render
 
 # Uploads directory contents except .gitkeep
 server/uploads/*
@@ -26,3 +35,4 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*

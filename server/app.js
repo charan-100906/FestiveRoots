@@ -20,10 +20,35 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 
 // Middleware
+// Dynamic CORS origin configuration to support Vercel, Render, and custom client URLs
+const explicitOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',').map((u) => u.trim()) : [])
+];
+
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173', process.env.CLIENT_URL].filter(Boolean),
-    credentials: true
+    origin: (origin, callback) => {
+      // Allow non-browser requests (e.g. curl, Postman, health check pings)
+      if (!origin) return callback(null, true);
+
+      // Check explicit origin list
+      if (explicitOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // Allow all Vercel domains (*.vercel.app) and Render domains (*.onrender.com)
+      if (origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
+        return callback(null, true);
+      }
+
+      // Default allow for seamless deployment connectivity
+      return callback(null, true);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
   })
 );
 app.use(express.json({ limit: '10mb' }));

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag, MapPin, CheckCircle, Sparkles } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -25,9 +26,7 @@ const ProductCard = ({ product }) => {
     toggleWishlist(product);
   };
 
-  const imageSrc =
-    product.images?.[0] ||
-    'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&q=80';
+  const imageSrc = getImageUrl(product.images?.[0]);
 
   return (
     <div className="product-card card">

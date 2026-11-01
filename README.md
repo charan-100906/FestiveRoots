@@ -1,7 +1,9 @@
 # FestiveRoots — Regional Festive Products & Traditional Artisan Marketplace
 
 > **Tagline:** *Discover the Traditions Behind Every Product.*  
-> **Academic Project:** Full Stack Development MERN Capstone Implementation
+> **Academic Project:** Full Stack Development MERN Capstone Implementation  
+> **Live Web App:** `https://festiveroots.vercel.app` *(Deploy via Vercel following Section 10)*  
+> **API Service:** `https://festiveroots-backend.onrender.com` *(Deploy via Render following Section 10)*
 
 ---
 
@@ -280,22 +282,76 @@ node scripts/testE2E.js
 
 ---
 
-## 10. Deployment Guide
+## 10. Complete Cloud Deployment Guide
 
-### MongoDB Atlas Setup:
-1. Create a free M0 cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
-2. Create a database user and allow your server IP (or `0.0.0.0/0`).
-3. Set `MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/festiveroots?retryWrites=true&w=majority`.
+FestiveRoots is pre-configured with zero-configuration deployment manifests for **Render** (backend) and **Vercel** (frontend).
 
-### Backend Deployment (Render / Railway / AWS):
-1. Build command: `npm install`
-2. Start command: `npm start`
-3. Environment variables: `PORT=5000`, `MONGODB_URI`, `JWT_SECRET`, `NODE_ENV=production`, `CLIENT_URL=https://your-frontend-domain.com`.
+### Step 1: Set Up Free Cloud Database (MongoDB Atlas)
+1. Sign up or log into [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Click **Create a Deployment** and choose the **M0 Free Tier** (AWS / any region).
+3. Under **Security Quickstart**:
+   - Create a Database User with username (e.g. `festive_admin`) and a secure password.
+   - Under **IP Access List**, click **Add IP Address** and choose **Allow Access from Anywhere (`0.0.0.0/0`)** so Render can connect.
+4. Click **Connect** > **Drivers** (Node.js) and copy your connection string:
+   ```text
+   mongodb+srv://<username>:<password>@cluster0.xxx.mongodb.net/festiveroots?retryWrites=true&w=majority
+   ```
+   *(Replace `<username>` and `<password>` with your database credentials).*
 
-### Frontend Deployment (Vercel / Netlify):
-1. Build command: `npm run build`
-2. Output directory: `dist`
-3. Configure API proxy or rewrite rule routing `/api/*` to the backend deployment domain.
+### Step 2: Push Your Code to GitHub
+Ensure all changes are committed and pushed to your repository:
+```bash
+git add .
+git commit -m "Configure production deployment for Render and Vercel"
+git push origin main
+```
+
+### Step 3: Deploy Backend on Render
+1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New +** > **Web Service**.
+2. Connect your GitHub repository: `charan-100906/FestiveRoots`.
+3. Configure the service settings:
+   - **Name:** `festiveroots-backend`
+   - **Root Directory:** `server`
+   - **Environment:** `Node`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+   - **Plan:** Free
+4. Under **Environment Variables**, add:
+   - `NODE_ENV` = `production`
+   - `MONGODB_URI` = *(your MongoDB Atlas connection string from Step 1)*
+   - `JWT_SECRET` = *(a secure 32+ character random secret string)*
+   - `CLIENT_URL` = `https://festiveroots.vercel.app` *(or leave as '*' until frontend is deployed)*
+5. Click **Create Web Service**. Wait for the build to finish. Once live, copy your backend URL (e.g., `https://festiveroots-backend.onrender.com`).
+6. Verify the backend is live by opening `https://festiveroots-backend.onrender.com/api/health` in your browser. You should see `{"status":"online"}`.
+
+### Step 4: Populate Seed Data in MongoDB Atlas
+To seed all regional products, artisans, categories, and festivals into your remote Atlas database, run this once from your local computer:
+```bash
+# In the server directory, set the remote Atlas URI and run seed
+cd server
+$env:MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.xxx.mongodb.net/festiveroots?retryWrites=true&w=majority"
+npm run seed
+```
+
+### Step 5: Deploy Frontend on Vercel
+1. Go to [Vercel Dashboard](https://vercel.com/) and click **Add New...** > **Project**.
+2. Import the `charan-100906/FestiveRoots` repository.
+3. In project settings:
+   - **Framework Preset:** `Vite`
+   - **Root Directory:** Click Edit and select `client`
+   - **Build Command:** `npm run build` (default)
+   - **Output Directory:** `dist` (default)
+4. Under **Environment Variables**, add:
+   - `VITE_API_URL` = `https://festiveroots-backend.onrender.com` *(your Render backend URL from Step 3 without trailing slash)*
+5. Click **Deploy**. Vercel will build and assign you a live production URL, such as `https://festiveroots.vercel.app`.
+6. Open your live Vercel URL to experience the full FestiveRoots application!
+
+### Step 6: Update Render CORS and GitHub Repository About URL
+1. In your Render Web Service dashboard, update `CLIENT_URL` to your actual Vercel domain (e.g. `https://festiveroots.vercel.app`).
+2. In your GitHub repository `https://github.com/charan-100906/FestiveRoots`:
+   - Click the gear icon (⚙️) next to **About** on the right sidebar.
+   - Paste your Vercel public URL into the **Website** field.
+   - Save changes!
 
 ---
 

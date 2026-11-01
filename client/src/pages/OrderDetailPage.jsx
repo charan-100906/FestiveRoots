@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Package, MapPin, Truck, Clock, ShieldCheck, CheckCircle } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/common/StatusBadge';
+import { getImageUrl } from '../utils/imageUrl';
 
 const OrderDetailPage = () => {
   const { id } = useParams();
@@ -118,7 +119,7 @@ const OrderDetailPage = () => {
               <div style={{ marginBottom: '1.5rem' }}>
                 {ful.items?.map((it, iIdx) => (
                   <div key={iIdx} style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-                    <img src={it.image} alt={it.name} style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
+                    <img src={getImageUrl(it.image)} alt={it.name} style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
                     <div style={{ flex: 1 }}>
                       <Link to={`/products/${it.product}`} style={{ fontWeight: 600, fontSize: '0.92rem' }}>{it.name}</Link>
                       <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Qty: {it.quantity} × ₹{it.price?.toLocaleString('en-IN')}</div>

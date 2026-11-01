@@ -21,6 +21,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import StatusBadge from '../components/common/StatusBadge';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -130,7 +131,7 @@ const ProductDetailPage = () => {
   }
 
   const isFavorited = isInWishlist(product._id);
-  const images = product.images?.length > 0 ? product.images : ['https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&q=80'];
+  const images = (product.images?.length > 0 ? product.images : ['https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800&q=80']).map(getImageUrl);
 
   return (
     <div className="product-detail-page">

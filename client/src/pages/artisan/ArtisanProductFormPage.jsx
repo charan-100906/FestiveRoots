@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Upload, Plus, Trash2, Sparkles, Info, CheckCircle } from 'lucide-react';
 import api from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ArtisanProductFormPage = () => {
   const { id } = useParams(); // If present, edit mode!
@@ -481,7 +482,7 @@ const ArtisanProductFormPage = () => {
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', margin: '1rem 0 1.5rem' }}>
               {formData.images.map((imgUrl, idx) => (
                 <div key={idx} style={{ position: 'relative', width: '100px', height: '100px', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
-                  <img src={imgUrl} alt="Product preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={getImageUrl(imgUrl)} alt="Product preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {formData.images.length > 1 && (
                     <button
                       type="button"

@@ -15,6 +15,7 @@ import {
 import api from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import StatusBadge from '../../components/common/StatusBadge';
+import { getImageUrl } from '../../utils/imageUrl';
 
 const ArtisanDashboardPage = () => {
   const { user } = useAuth();
@@ -205,7 +206,7 @@ const ArtisanDashboardPage = () => {
                   {products.slice(0, 5).map((prod) => (
                     <tr key={prod._id} style={{ borderBottom: '1px solid var(--color-border-light)' }}>
                       <td style={{ padding: '0.75rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                        <img src={prod.images?.[0]} alt={prod.name} style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
+                        <img src={getImageUrl(prod.images?.[0])} alt={prod.name} style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
                         <span style={{ fontWeight: 600 }}>{prod.name}</span>
                       </td>
                       <td style={{ padding: '0.75rem 0.5rem' }}>{prod.craftType}</td>

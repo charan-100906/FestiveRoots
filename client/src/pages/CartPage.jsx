@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag, ArrowRight, ArrowLeft, ShieldCheck, Truck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CartPage = () => {
   const {
@@ -62,7 +63,7 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <div key={item.productId} className="cart-item-row">
                   <div className="cart-item-thumb">
-                    <img src={item.image} alt={item.name} />
+                    <img src={getImageUrl(item.image)} alt={item.name} />
                   </div>
 
                   <div className="cart-item-details">
