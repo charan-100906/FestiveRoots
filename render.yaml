@@ -1,5 +1,5 @@
 services:
-  # FestiveRoots Backend API (Express.js + Node.js)
+  # FestiveRoots Backend API
   - type: web
     name: festiveroots-backend
     runtime: node
@@ -12,8 +12,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
       - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
@@ -21,13 +19,11 @@ services:
       - key: CLIENT_URL
         sync: false
 
-  # FestiveRoots Frontend Client (Vite + React SPA)
-  # Use this if you choose to deploy both frontend and backend together on Render
+  # FestiveRoots Frontend
   - type: web
     name: festiveroots-frontend
     runtime: static
     plan: free
-    region: oregon
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: dist
